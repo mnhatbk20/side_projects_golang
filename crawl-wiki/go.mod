@@ -1,4 +1,4 @@
-module oldyear
+module crawl-wiki
 
 go 1.19
 
