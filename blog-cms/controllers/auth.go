@@ -6,26 +6,54 @@ import (
 	"time"
 	"os"
 
-	"build.cv/database"
-	"build.cv/models"
+	"blog-cms/database"
+	"blog-cms/models"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
+	"github.com/go-playground/validator/v10"
+
 )
 
+var validate *validator.Validate
 
 func Register(c *fiber.Ctx) error {
 	// var data *map[string]string
 
 	data := new(struct {
-		UserName string `form:"username"`
-		Password string `form:"password"`
+		UserName string `form:"username" validate:"required"`
+		Password string `form:"password" validate:"required,min=8"`
+		RetypePassword string `form:"retype-password"`
+
 	})
 
 	if err := c.BodyParser(data); err != nil {
 		return err
 	}
 
+	validate = validator.New()
+	err := validate.Struct(data)
+	if err != nil {
+
+		if _, ok := err.(*validator.InvalidValidationError); ok {
+			return err
+		}
+
+		var message_err []string
+
+		for _, err := range err.(validator.ValidationErrors) {
+			message_err = append(message_err,err.Field())
+		}
+
+		return c.JSON(fiber.Map{
+			"message": message_err,			
+		})
+	}
+	if (data.Password != data.RetypePassword){
+		return c.JSON(fiber.Map{
+			"message": "password is mismatch",			
+		})
+	}
 
 	var count int64
 
@@ -46,7 +74,9 @@ func Register(c *fiber.Ctx) error {
 
 	database.DBGorm.Create(&user)
 
-	return c.JSON(user)
+	return c.JSON(fiber.Map{
+		"message": "success",
+	})
 }
 
 func Login(c *fiber.Ctx) error {
@@ -55,14 +85,34 @@ func Login(c *fiber.Ctx) error {
 
 
 	var data struct {
-		UserName string `form:"username"`
-		Password string `form:"password"`
+		UserName string `form:"username" validate:"required"`
+		Password string `form:"password" validate:"required"`
 	}
 
 	if err := c.BodyParser(&data); err != nil {
 		return err
 	}
 
+	validate = validator.New()
+	err := validate.Struct(&data)
+	if err != nil {
+
+		if _, ok := err.(*validator.InvalidValidationError); ok {
+			return err
+		}
+
+		var message_err []string
+
+		for _, err := range err.(validator.ValidationErrors) {
+			message_err = append(message_err,err.Field())
+		}
+
+		// from here you can create your own error messages in whatever language you wish
+		return c.JSON(fiber.Map{
+			"message": message_err,			
+		})
+	}
+	
 	var user models.User
 
 	database.DBGorm.First(&user, "user_name = ?", data.UserName)

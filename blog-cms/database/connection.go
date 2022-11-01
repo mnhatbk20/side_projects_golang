@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"build.cv/models"
+	"blog-cms/models"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -27,12 +27,11 @@ func Connect() {
 		panic("could not connect to the database")
 	}
 
-	DBGorm.AutoMigrate(&models.ContactSocial{})
-	DBGorm.AutoMigrate(&models.Education{})
-	DBGorm.AutoMigrate(&models.WorkExperience{})
-	DBGorm.AutoMigrate(&models.References{})
-	DBGorm.AutoMigrate(&models.Hobby{})
-	DBGorm.AutoMigrate(&models.Skill{})
+	DBGorm.AutoMigrate(&models.BlogInfo{})
+	DBGorm.AutoMigrate(&models.Post{})
+	DBGorm.AutoMigrate(&models.User{})
+	DBGorm.AutoMigrate(&models.Comment{})
+	DBGorm.AutoMigrate(&models.Tag{})
 	DBGorm.AutoMigrate(&models.User{})
 
 }

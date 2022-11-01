@@ -3,8 +3,8 @@ package controllers
 import (
 	// "fmt"
 
-	"build.cv/database"
-	"build.cv/models"
+	"blog-cms/database"
+	"blog-cms/models"
 	"github.com/gofiber/fiber/v2"
 	"github.com/dgrijalva/jwt-go"
 

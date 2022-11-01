@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="/assets/css/login.css">
+
+</head>
+
+<body class="login">
+    <section>
+
+        <div class="container">
+            <div class="form-content">
+
+                <h2 class="text-center title-form">Register</h2>
+
+                <form class="loginForm">
+                    <div class="form-wrapper">
+                        <div class="form-group">
+                            <label for="username">UserName</label>
+                            <input type="text" class="form-control" id="username" aria-describedby="emailHelp"
+                                placeholder="">
+
+                            <div class="error-message"></div>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="">
+                            <div class="error-message"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="retype-password">Re-type Password</label>
+                            <input type="password" class="form-control" id="retype-password" placeholder="">
+                            <div class="error-message"></div>
+                        </div>
+                        <div class="error-message" id="err"></div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script>
+
+        async function postData(url = '', data) {
+
+            const response = await fetch(url, {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: data // body data type must match "Content-Type" header
+            });
+            return response.json(); // parses JSON response into native JavaScript objects
+        }
+
+        function clearAllErr() {
+            $('#password').next().text('')
+            $('#username').next().text('')
+            $('#retype-password').next().text('')
+
+            $('#err').text('')
+        }
+        const form = document.querySelector(".loginForm");
+        if (form) {
+            form.addEventListener("submit", (e) => {
+                // remove default functionality 
+                e.preventDefault();
+
+                var formData = new FormData();
+                fields = ["username", "password","retype-password"]
+
+                fields.forEach((field) => {
+                    formData.append(`${field}`, document.querySelector(`#${field}`).value);
+                });
+
+                postData('/api/register', formData)
+                    .then((data) => {
+
+                        var message = data.message
+                        clearAllErr()
+
+                        if (!Array.isArray(message)) {
+
+                            if (message == "username has already been registered") {
+                                $('#err').text("Username has already been registered")
+                            }
+                            if (message == "password is mismatch") {
+                                $('#err').text("Password is mismatch")
+                            }
+                            if (message == "success") {
+                                window.location.href = '/dashboard';
+                            }
+                        } else {
+                            if (message.includes("UserName")) {
+                                $('#username').next().text("Invalid Username")
+                            }
+                            if (message.includes("Password")) {
+                                $('#password').next().text("Invalid Password")
+                            }
+                        }
+
+                    });
+
+            })
+        }
+
+    </script>
+</body>
+
+</html>

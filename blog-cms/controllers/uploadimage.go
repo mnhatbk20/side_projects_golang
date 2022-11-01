@@ -1,13 +1,14 @@
 package controllers
 
 import (
-	"build.cv/database"
-	"build.cv/models"
+	"blog-cms/database"
+	"blog-cms/models"
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
-	"github.com/gofiber/fiber/v2"
 	"os"
 	"strings"
+
+	"github.com/dgrijalva/jwt-go"
+	"github.com/gofiber/fiber/v2"
 )
 
 func UploadImage(c *fiber.Ctx) error {
@@ -37,17 +38,15 @@ func UploadImage(c *fiber.Ctx) error {
 
 	}
 
-
-	filename :="cv_" + claims.Issuer + "."+ strings.Split(file.Filename, ".")[1]
+	filename := "cv_" + claims.Issuer + "." + strings.Split(file.Filename, ".")[1]
 
 	c.SaveFile(file, fmt.Sprintf("./public/images/gallery/%s", filename))
 
 	var user models.User
-	
-	database.DBGorm.Where("id = ?", claims.Issuer).First(&user)
-	user.Image = filename
-	database.DBGorm.Save(&user)
 
+	database.DBGorm.Where("id = ?", claims.Issuer).First(&user)
+	user.Avatar = filename
+	database.DBGorm.Save(&user)
 
 	return c.JSON(fiber.Map{
 		"message": "success",

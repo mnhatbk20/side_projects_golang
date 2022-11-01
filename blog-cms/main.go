@@ -1,8 +1,8 @@
 package main
 
 import (
-	"build.cv/database"
-	"build.cv/routes"
+	"blog-cms/database"
+	"blog-cms/routes"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/template/html"

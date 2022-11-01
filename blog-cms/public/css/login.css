@@ -1,0 +1,40 @@
+section {
+  padding: 4em 0;
+}
+
+.title-form {
+  width: 100%;
+
+}
+
+.form-content {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.loginForm {
+  width: 450px;
+  margin: auto;
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.loginForm button {
+  width: 10em;
+  /* margin: auto; */
+}
+.error-message {
+  height: 1.5em;
+  font-size: 0.8em;
+  text-align: right;
+  color: red;
+}
+
+.form-group {
+  margin-bottom: 0;
+}
