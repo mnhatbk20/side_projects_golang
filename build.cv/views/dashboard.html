@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center">Welcome {{.FirstName}} to the Dashboard</h1>
+        <p class="text-center"><a href="#" class="logout">Log Out</a></p>
+        <h2><a href="/mycv">Xem CV</a></h2>
+
+        <div style="width: 100px;">
+            <img style="width: 100%" src="/assets/images/gallery/{{.Image}}" alt="Avatar">
+        </div>
+
+        <div>Update Avatar</div>
+        <input id="image-file" type="file" onchange="SavePhoto(this)">
+
+    </div>
+    <script>
+
+        async function SavePhoto(inp) {
+            let formData = new FormData();
+            let photo = inp.files[0];
+            formData.append("photo", photo);
+
+            const ctrl = new AbortController()    // timeout
+            setTimeout(() => ctrl.abort(), 5000);
+
+            try {
+                let r = await fetch('/api/upload/image',
+                    { method: "POST", body: formData, signal: ctrl.signal });
+                console.log('HTTP response code:', r.status);
+                location.reload();
+
+
+            } catch (e) {
+                console.log('Huston we have problem...:', e);
+            }
+
+        }
+
+        document.querySelector(".logout").addEventListener("click", (e) => {
+            e.preventDefault();
+            const response = fetch('/api/logout', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer',
+                body: ''
+            }).then(data => {
+                location.reload();
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>
