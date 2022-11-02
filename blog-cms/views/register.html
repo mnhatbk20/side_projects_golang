@@ -2,64 +2,122 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog Name | Registration Page</title>
 
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/assets/plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/assets/plugins/adminlte/css/adminlte.min.css">
+    <style>
+        #registerForm .row,
+        #registerForm .input-group {
+            position: relative;
+        }
 
-    <link rel="stylesheet" href="/assets/css/login.css">
-
+        #registerForm .row .error-message,
+        #registerForm .input-group .error-message {
+            position: absolute;
+            color: red;
+            top: calc(100% - 0.2em);
+            font-size: 0.75em;
+            right: 0;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
-<body class="login">
-    <section>
+<body class="hold-transition register-page">
+    <div class="register-box">
+        <div class="register-logo">
+            <a href=""><b>LOGO</b></a>
+        </div>
 
-        <div class="container">
-            <div class="form-content">
+        <div class="card">
+            <div class="card-body register-card-body">
+                <p class="login-box-msg">Register a new account</p>
 
-                <h2 class="text-center title-form">Register</h2>
-
-                <form class="loginForm">
-                    <div class="form-wrapper">
-                        <div class="form-group">
-                            <label for="username">UserName</label>
-                            <input type="text" class="form-control" id="username" aria-describedby="emailHelp"
-                                placeholder="">
-
-                            <div class="error-message"></div>
-
+                <form id="registerForm">
+                    <div class="input-group mb-3">
+                        <input id="username" type="text" class="form-control" placeholder="Username">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="">
-                            <div class="error-message"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="retype-password">Re-type Password</label>
-                            <input type="password" class="form-control" id="retype-password" placeholder="">
-                            <div class="error-message"></div>
-                        </div>
-                        <div class="error-message" id="err"></div>
-
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <div id="err-username" class="error-message"></div>
 
                     </div>
+                    <div class="input-group mb-3">
+                        <input id="password" type="password" class="form-control" placeholder="Password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                        <div id="err-password" class="error-message"></div>
+
+                    </div>
+                    <div class="input-group mb-3">
+                        <input id="retype-password" type="password" class="form-control" placeholder="Retype password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                        <div id="err-retype-password" class="error-message"></div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+                                <label for="agreeTerms">
+                                    I agree to the <a href="#">terms</a>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        </div>
+                        <div id="err" class="error-message"></div>
+
+                        <!-- /.col -->
+                    </div>
                 </form>
+
+                <div class="social-auth-links text-center">
+                    <p>- OR -</p>
+                    <a href="#" class="btn btn-block btn-primary">
+                        <i class="fab fa-facebook mr-2"></i>
+                        Sign up using Facebook
+                    </a>
+                    <a href="#" class="btn btn-block btn-danger">
+                        <i class="fab fa-google-plus mr-2"></i>
+                        Sign up using Google+
+                    </a>
+                </div>
+
+                <a href="login.html" class="text-center">I already have a account</a>
             </div>
+            <!-- /.form-box -->
+        </div><!-- /.card -->
+    </div>
+    <!-- /.register-box -->
 
-        </div>
-    </section>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+    <!-- jQuery -->
+    <script src="/assets/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/assets/plugins/adminlte/js/adminlte.min.js"></script>
     <script>
 
         async function postData(url = '', data) {
@@ -77,13 +135,13 @@
         }
 
         function clearAllErr() {
-            $('#password').next().text('')
-            $('#username').next().text('')
-            $('#retype-password').next().text('')
+            $('#err-password').text('')
+            $('#err-username').text('')
+            $('#err-retype-password').text('')
 
             $('#err').text('')
         }
-        const form = document.querySelector(".loginForm");
+        const form = document.querySelector("#registerForm");
         if (form) {
             form.addEventListener("submit", (e) => {
                 // remove default functionality 
@@ -108,17 +166,17 @@
                                 $('#err').text("Username has already been registered")
                             }
                             if (message == "password is mismatch") {
-                                $('#err').text("Password is mismatch")
+                                $('#err-retype-password').text("Password is mismatch")
                             }
                             if (message == "success") {
                                 window.location.href = '/dashboard';
                             }
                         } else {
                             if (message.includes("UserName")) {
-                                $('#username').next().text("Invalid Username")
+                                $('#err-username').text("Invalid Username")
                             }
                             if (message.includes("Password")) {
-                                $('#password').next().text("Invalid Password")
+                                $('#err-password').text("Invalid Password")
                             }
                         }
 

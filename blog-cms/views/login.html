@@ -2,127 +2,181 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog name | Login Page</title>
 
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/assets/plugins/adminlte/css/adminlte.min.css">
+  <style>
+    #loginForm .row,
+    #loginForm .input-group {
+      position: relative;
+    }
 
-    <link rel="stylesheet" href="/assets/css/login.css">
-
+    #loginForm .row .error-message,
+    #loginForm .input-group .error-message {
+      position: absolute;
+      color: red;
+      top: calc(100% - 0.2em);
+      font-size: 0.75em;
+      right: 0;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
-<body class="login">
-    <section>
+<body class="hold-transition login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <a href=""><b>LOGO</b></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+        <p class="login-box-msg">Sign in to start your session</p>
 
-        <div class="container">
-            <div class="form-content">
-    
-                    <h2 class="text-center title-form">Login</h2>
-                
-                    <form class="loginForm">
-                        <div class="form-wrapper">
-                            <div class="form-group">
-                                <label for="username">UserName</label>
-                                <input type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Username">
-                                
-                                <div class="error-message"></div>
-                    
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Password">
-                                <div class="error-message"></div>                    
-                            </div>
-                            <div class="error-message" id="err"></div>
-                    
-                            <button type="submit" class="btn btn-primary">Submit</button>
-    
-                        </div>
-                    </form>
+        <form id="loginForm">
+          <div class="input-group mb-3">
+            <input id="username" type="text" class="form-control" placeholder="Username">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
             </div>
-    
+            <div id="err-username" class="error-message"></div>
+          </div>
+
+          <div class="input-group mb-3">
+            <input id="password" type="password" class="form-control" placeholder="Password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+            <div id="err-password" class="error-message"></div>
+          </div>
+
+          <div class="row">
+            <div class="col-8">
+              <div class="icheck-primary">
+                <input type="checkbox" id="remember">
+                <label for="remember">
+                  Remember Me
+                </label>
+              </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-4">
+              <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            </div>
+            <!-- /.col -->
+            <div id="err" class="error-message"></div>
+          </div>
+
+        </form>
+
+        <div class="social-auth-links text-center mb-3">
+          <p>- OR -</p>
+          <a href="#" class="btn btn-block btn-primary">
+            <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+          </a>
+          <a href="#" class="btn btn-block btn-danger">
+            <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+          </a>
         </div>
-    </section>
+        <!-- /.social-auth-links -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <script>
+        <p class="mb-1">
+          <a href="forgot-password.html">I forgot my password</a>
+        </p>
+        <p class="mb-0">
+          <a href="/register" class="text-center">Register a new account</a>
+        </p>
+      </div>
+      <!-- /.login-card-body -->
+    </div>
+  </div>
+  <!-- /.login-box -->
 
-        async function postData(url = '', data) {
+  <!-- jQuery -->
+  <script src="/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/assets/plugins/adminlte/js/adminlte.min.js"></script>
+  <script>
 
-            const response = await fetch(url, {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'same-origin', // include, *same-origin, omit
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                body: data // body data type must match "Content-Type" header
-            });
-            return response.json(); // parses JSON response into native JavaScript objects
-        }
+    async function postData(url = '', data) {
 
-        function clearAllErr() {
-            $('#password').next().text('')
-            $('#username').next().text('')
-            $('#err').text('')
-        }
-        const form = document.querySelector(".loginForm");
-        if (form) {
-            form.addEventListener("submit", (e) => {
-                // remove default functionality 
-                e.preventDefault();
+      const response = await fetch(url, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: data // body data type must match "Content-Type" header
+      });
+      return response.json(); // parses JSON response into native JavaScript objects
+    }
 
-                var formData = new FormData();
-                fields = ["username", "password"]
+    function clearAllErr() {
+      $('#err-username').text("")
+      $('#err-password').text("")
+      $('#err').text('')
+    }
+    const form = document.querySelector("#loginForm");
+    if (form) {
+      form.addEventListener("submit", (e) => {
+        // remove default functionality 
+        e.preventDefault();
 
-                fields.forEach((field) => {
-                    formData.append(`${field}`, document.querySelector(`#${field}`).value);
-                });
+        var formData = new FormData();
+        fields = ["username", "password"]
 
-                postData('/api/login', formData)
-                    .then((data) => {
+        fields.forEach((field) => {
+          formData.append(`${field}`, document.querySelector(`#${field}`).value);
+        });
 
-                        var message = data.message
-                        clearAllErr()
+        postData('/api/login', formData)
+          .then((data) => {
 
-                        if (!Array.isArray(message)) {
+            var message = data.message
+            clearAllErr()
 
-                            if ((message == "user not found") || (message == "incorrect password")) {
-                                $('#err').text("Username or Password is incorrect")
-                            }
-                            if (message == "could not login") {
-                                $('#err').text("Error Server")
-                            }
-                            if (message == "success") {
-                                window.location.href = '/dashboard';
-                            }
-                        } else {
-                            if (message.includes("UserName")) {
-                                $('#username').next().text("Invalid Username")
-                            }
-                            if (message.includes("Password")) {
-                                $('#password').next().text("Invalid Password")
-                            }
-                        }
+            if (!Array.isArray(message)) {
 
-                    });
+              if ((message == "user not found") || (message == "incorrect password")) {
+                $('#err').text("Username or Password is incorrect")
+              }
+              if (message == "could not login") {
+                $('#err').text("Error Server")
+              }
+              if (message == "success") {
+                window.location.href = '/dashboard';
+              }
+            } else {
+              if (message.includes("UserName")) {
+                $('#err-username').text("Invalid Username")
+              }
+              if (message.includes("Password")) {
+                $('#err-password').text("Invalid Password")
+              }
+            }
 
-            })
-        }
+          });
 
-
-
-
-    </script>
+      })
+    }
+  </script>
 </body>
 
 </html>
