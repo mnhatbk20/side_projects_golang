@@ -15,7 +15,9 @@ func Setup(app *fiber.App) {
 	app.Get("/register", controllers.RegisterPage)
 
 	app.Get("/dashboard", middleware.Authencation, controllers.DashboardPage)
-	app.Get("/mycv", middleware.Authencation, controllers.MyCv)
+	app.Get("/dashboard/user", middleware.Authencation, controllers.UserPage)
+	app.Get("/dashboard/posts", middleware.Authencation, controllers.AllPostPage)
+
 
 
 	app.Post("/api/upload/image", middleware.Authencation, controllers.UploadImage)

@@ -21,10 +21,19 @@ type Post struct {
 	Title     string
 	Slug      string
 	Content   string
+	Rating uint16
+	CategoryID uint
+	Category   Category
 	CreatedAt time.Time
 }
 
 type Tag struct {
+	ID   uint `gorm:"primarykey"`
+	Slug string
+	Name string
+}
+
+type Category struct {
 	ID   uint `gorm:"primarykey"`
 	Slug string
 	Name string
@@ -40,6 +49,8 @@ type Comment struct {
 
 type User struct {
 	ID       uint `gorm:"primarykey"`
+	FirstName string
+	LastName string
 	UserName string
 	Password string
 	Email    string

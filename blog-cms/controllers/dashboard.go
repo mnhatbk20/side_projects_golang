@@ -7,7 +7,9 @@ import (
 	"blog-cms/models"
 
 )
-
+type dataViewDashboard struct {
+	User models.User
+}
 func DashboardPage(c *fiber.Ctx) error {
 
 	var token *jwt.Token
@@ -17,5 +19,8 @@ func DashboardPage(c *fiber.Ctx) error {
 
 	var user models.User
 	database.DBGorm.First(&user, "id = ?", claims.Issuer)	
-	return c.Render("dashboard", user)
+	dataView := dataViewDashboard{user}
+
+
+	return c.Render("dashboard", dataView)
 }

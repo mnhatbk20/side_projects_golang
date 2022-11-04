@@ -38,7 +38,7 @@ func UploadImage(c *fiber.Ctx) error {
 
 	}
 
-	filename := "cv_" + claims.Issuer + "." + strings.Split(file.Filename, ".")[1]
+	filename := "image_" + claims.Issuer + "." + strings.Split(file.Filename, ".")[1]
 
 	c.SaveFile(file, fmt.Sprintf("./public/images/gallery/%s", filename))
 
