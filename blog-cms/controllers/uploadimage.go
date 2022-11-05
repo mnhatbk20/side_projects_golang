@@ -4,7 +4,6 @@ import (
 	"blog-cms/database"
 	"blog-cms/models"
 	"fmt"
-	"os"
 	"strings"
 
 	"github.com/dgrijalva/jwt-go"
@@ -13,20 +12,8 @@ import (
 
 func UploadImage(c *fiber.Ctx) error {
 
-	SecretKey := os.Getenv("SecretKey")
-
-	cookie := c.Cookies("jwt")
-
-	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(SecretKey), nil
-	})
-
-	if err != nil {
-		c.Status(fiber.StatusUnauthorized)
-		return c.JSON(fiber.Map{
-			"message": "unauthenticated",
-		})
-	}
+	var token *jwt.Token
+	token = c.Locals("token").(*jwt.Token)
 
 	claims := token.Claims.(*jwt.StandardClaims)
 

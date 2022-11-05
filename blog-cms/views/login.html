@@ -149,10 +149,12 @@
         postData('/api/login', formData)
           .then((data) => {
 
+            var validateError = data.validate_error
             var message = data.message
+
             clearAllErr()
 
-            if (!Array.isArray(message)) {
+            if (!Array.isArray(validateError)) {
 
               if ((message == "user not found") || (message == "incorrect password")) {
                 $('#err').text("Username or Password is incorrect")
@@ -164,10 +166,10 @@
                 window.location.href = '/dashboard';
               }
             } else {
-              if (message.includes("UserName")) {
+              if (validateError.includes("UserName")) {
                 $('#err-username').text("Invalid Username")
               }
-              if (message.includes("Password")) {
+              if (validateError.includes("Password")) {
                 $('#err-password').text("Invalid Password")
               }
             }

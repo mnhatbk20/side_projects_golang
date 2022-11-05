@@ -11,19 +11,13 @@ import (
 
 func main() {
 	database.Connect()
-
 	engine := html.New("./views", ".html")
-
 	app := fiber.New(fiber.Config{
 		Views: engine,
 	})
-
 	app.Use(cors.New(cors.Config{
 		AllowCredentials: true,
 	}))
-
-
 	routes.Setup(app)
-
 	app.Listen(":8000")
 }

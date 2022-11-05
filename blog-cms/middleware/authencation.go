@@ -23,9 +23,28 @@ func Authencation(c *fiber.Ctx) (error) {
 			"message": "unauthenticated",
 		}) 
 	}
-
 	
 	c.Locals("token", token)
 	return c.Next()
 
+  }
+  
+func AuthencationAPI(c *fiber.Ctx) (error) {
+	
+	SecretKey := os.Getenv("SecretKey")
+
+	cookie := c.Cookies("jwt")
+
+	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte(SecretKey), nil
+	})
+
+	if err != nil {
+		return c.JSON(fiber.Map{
+			"message": "unauthenticated",
+		}) 
+	}
+	
+	c.Locals("token", token)
+	return c.Next()
   }

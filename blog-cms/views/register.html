@@ -148,7 +148,7 @@
                 e.preventDefault();
 
                 var formData = new FormData();
-                fields = ["username", "password","retype-password"]
+                fields = ["username", "password", "retype-password"]
 
                 fields.forEach((field) => {
                     formData.append(`${field}`, document.querySelector(`#${field}`).value);
@@ -157,10 +157,12 @@
                 postData('/api/register', formData)
                     .then((data) => {
 
+                        var validateError = data.validate_error
                         var message = data.message
+
                         clearAllErr()
 
-                        if (!Array.isArray(message)) {
+                        if (!Array.isArray(error)) {
 
                             if (message == "username has already been registered") {
                                 $('#err').text("Username has already been registered")
@@ -172,10 +174,10 @@
                                 window.location.href = '/dashboard';
                             }
                         } else {
-                            if (message.includes("UserName")) {
+                            if (validateError.includes("UserName")) {
                                 $('#err-username').text("Invalid Username")
                             }
-                            if (message.includes("Password")) {
+                            if (validateError.includes("Password")) {
                                 $('#err-password').text("Invalid Password")
                             }
                         }

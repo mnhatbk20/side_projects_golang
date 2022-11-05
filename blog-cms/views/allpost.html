@@ -59,12 +59,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Posts</h1>
+              <h1>{{.Title}}</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">All post</li>
+                <li class="breadcrumb-item active">{{.Breadcrumb}}</li>
               </ol>
             </div>
           </div>
@@ -76,18 +76,6 @@
 
         <!-- Default box -->
         <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">All Post</h3>
-
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
           <div class="card-body p-0">
             <table class="table table-striped projects">
               <thead>
@@ -95,16 +83,16 @@
                   <th style="width: 1%">
                     #
                   </th>
-                  <th style="width: 20%">
+                  <th style="width: 30%">
                     Title
                   </th>
-                  <th style="width: 30%">
+                  <th style="width: 20%">
                     Tags
                   </th>
-                  <th>
-                    Rating
+                  <th style="width: 20%">
+                    Category
                   </th>
-                  <th style="width: 8%" class="text-center">
+                  <th style="width: 9%" class="text-center">
                     Status
                   </th>
                   <th style="width: 20%">
@@ -113,7 +101,7 @@
               </thead>
               <tbody>
                 {{if .Post}}
-                {{range .Post}}
+                {{range $i, $e :=.Post}}
                 <tr>
                   <td>
                     #
@@ -124,7 +112,7 @@
                     </a>
                     <br />
                     <small>
-                      Created {{.CreatedAt}}
+                      Created {{ $.GetCreateAtTimeFormat $i}}
                     </small>
                   </td>
                   <td>
@@ -138,18 +126,12 @@
                     </ul>
                     {{end}}
                   </td>
-                  <td class="project_progress">
-                    <div class="progress progress-sm">
-                      <div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{.Rating}}"
-                        aria-valuemin="0" aria-valuemax="100" style="width: {{.Rating}}%">
-                      </div>
-                    </div>
-                    <small>
-                      {{.Rating}}
-                    </small>
+                  <td>
+                    {{.Category.Name}}
                   </td>
+
                   <td class="project-state">
-                    <span class="badge badge-success">Success</span>
+                    <span class="badge {{ $.GetClassStatus .Status}}">{{.Status}}</span>
                   </td>
                   <td class="project-actions text-right">
                     <a class="btn btn-primary btn-sm" href="/post/{{.Slug}}">
@@ -228,7 +210,7 @@
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <!-- <script src="/assets/plugins/adminlte/js/pages/dashboard.js"></script> -->
 
-  <script src="/assets/dashboard-customize.js"></script>
+  <script src="/assets/js/dashboard-logout.js"></script>
 </body>
 
 </html>

@@ -16,14 +16,15 @@ type BlogInfo struct {
 }
 
 type Post struct {
-	ID        uint  `gorm:"primarykey"`
-	Tags      []Tag `gorm:"many2many:post_tag;"`
-	Title     string
-	Slug      string
-	Content   string
-	Rating uint16
-	CategoryID uint
-	Category   Category
+	ID          uint  `gorm:"primarykey"`
+	Tags        []Tag `gorm:"many2many:post_tag;"`
+	Title       string
+	Slug        string
+	Content     string
+	Status      string
+	CategoryID  uint
+	Category    Category
+	Description string
 	CreatedAt time.Time
 }
 
@@ -48,13 +49,14 @@ type Comment struct {
 }
 
 type User struct {
-	ID       uint `gorm:"primarykey"`
+	ID        uint `gorm:"primarykey"`
 	FirstName string
-	LastName string
-	UserName string
-	Password string
-	Email    string
-	IsAdmin  bool `gorm:"type:bool;default:false"`
-	Avatar string
-	CreatedAt    time.Time
+	LastName  string
+	UserName  string
+	Password  string
+	Email     string
+	IsAdmin   bool `gorm:"type:bool;default:false"`
+	Avatar    string
+	CreatedAt time.Time
 }
+

@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"strconv"
 	"time"
 	"os"
@@ -39,19 +38,21 @@ func Register(c *fiber.Ctx) error {
 			return err
 		}
 
-		var message_err []string
+		var validate_err []string
 
 		for _, err := range err.(validator.ValidationErrors) {
-			message_err = append(message_err,err.Field())
+			validate_err = append(validate_err,err.Field())
 		}
 
-		return c.JSON(fiber.Map{
-			"message": message_err,			
+		return c.Status(fiber.StatusNotAcceptable).JSON(fiber.Map{
+			"message": "wrong input",		
+			"validate_error": validate_err,	
 		})
 	}
 	if (data.Password != data.RetypePassword){
-		return c.JSON(fiber.Map{
-			"message": "password is mismatch",			
+		return c.Status(fiber.StatusNotAcceptable).JSON(fiber.Map{
+			"message": "password is mismatch",
+			"validate_error": 0,			
 		})
 	}
 
@@ -60,8 +61,9 @@ func Register(c *fiber.Ctx) error {
 	database.DBGorm.Model(&models.User{}).Where("user_name = ?", data.UserName ).Count(&count)
 
 	if(count>0) {
-		return c.JSON(fiber.Map{
+		return c.Status(fiber.StatusNotAcceptable).JSON(fiber.Map{
 			"message": "username has already been registered",
+			"validate_error": 0,
 		})
 	}
 
@@ -76,6 +78,7 @@ func Register(c *fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{
 		"message": "success",
+		"validate_error": 0,		
 	})
 }
 
@@ -101,15 +104,15 @@ func Login(c *fiber.Ctx) error {
 			return err
 		}
 
-		var message_err []string
+		var validate_err []string
 
 		for _, err := range err.(validator.ValidationErrors) {
-			message_err = append(message_err,err.Field())
+			validate_err = append(validate_err,err.Field())
 		}
 
-		// from here you can create your own error messages in whatever language you wish
-		return c.JSON(fiber.Map{
-			"message": message_err,			
+		return c.Status(fiber.StatusNotAcceptable).JSON(fiber.Map{
+			"message": "wrong input",		
+			"validate_error": validate_err,		
 		})
 	}
 	
@@ -119,15 +122,16 @@ func Login(c *fiber.Ctx) error {
 
 	if user.ID == 0 {
 		c.Status(fiber.StatusNotFound)
-		return c.JSON(fiber.Map{
+		return c.Status(fiber.StatusNotAcceptable).JSON(fiber.Map{
 			"message": "user not found",
+			"validate_error" : 0,
 		})
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(data.Password)); err != nil {
-		c.Status(fiber.StatusBadRequest)
-		return c.JSON(fiber.Map{
+		return c.Status(fiber.StatusNotAcceptable).JSON(fiber.Map{
 			"message": "incorrect password",
+			"validate_error": 0,		
 		})
 	}
 
@@ -139,9 +143,9 @@ func Login(c *fiber.Ctx) error {
 	token, err := claims.SignedString([]byte(SecretKey))
 
 	if err != nil {
-		c.Status(fiber.StatusInternalServerError)
-		return c.JSON(fiber.Map{
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": "could not login",
+			"validate_error": 0,		
 		})
 	}
 
@@ -156,35 +160,8 @@ func Login(c *fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{
 		"message": "success",
+		"validate_error": 0,		
 	})
-}
-
-func User(c *fiber.Ctx) error {
-	SecretKey := os.Getenv("SecretKey")
-
-	
-	cookie := c.Cookies("jwt")
-
-	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(SecretKey), nil
-	})
-
-	if err != nil {
-		c.Status(fiber.StatusUnauthorized)
-		return c.JSON(fiber.Map{
-			"message": "unauthenticated",
-		})
-	}
-
-	claims := token.Claims.(*jwt.StandardClaims)
-
-	var user models.User
-
-	database.DBGorm.Where("id = ?", claims.Issuer).First(&user)
-
-	fmt.Println(user.UserName)
-
-	return c.JSON(user)
 }
 
 func Logout(c *fiber.Ctx) error {

@@ -7,7 +7,8 @@ import (
 	"blog-cms/models"
 
 )
-type dataViewDashboard struct {
+type viewDashboard struct {
+	Breadcrumb string
 	User models.User
 }
 func DashboardPage(c *fiber.Ctx) error {
@@ -19,8 +20,8 @@ func DashboardPage(c *fiber.Ctx) error {
 
 	var user models.User
 	database.DBGorm.First(&user, "id = ?", claims.Issuer)	
-	dataView := dataViewDashboard{user}
+	view := viewDashboard{"Dashboard",user}
 
 
-	return c.Render("dashboard", dataView)
+	return c.Render("dashboard", view)
 }
