@@ -8,6 +8,7 @@ import (
 
 )
 type viewDashboard struct {
+	Title string
 	Breadcrumb string
 	User models.User
 }
@@ -20,7 +21,7 @@ func DashboardPage(c *fiber.Ctx) error {
 
 	var user models.User
 	database.DBGorm.First(&user, "id = ?", claims.Issuer)	
-	view := viewDashboard{"Dashboard",user}
+	view := viewDashboard{"Dashboard","Dashboard",user}
 
 
 	return c.Render("dashboard", view)
