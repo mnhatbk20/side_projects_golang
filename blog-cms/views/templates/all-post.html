@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>All Post | Admin</title>
+  <title>{{.Title}} | Admin</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
@@ -132,7 +132,7 @@
                       </i>
                       Edit
                     </a>
-                    <a id="post-delete" class="btn btn-danger btn-sm" href="#">
+                    <a class="post-delete btn btn-danger btn-sm" href="/api/posts/delete/{{.ID}}">
                       <i class="fas fa-trash">
                       </i>
                       Delete
@@ -199,6 +199,7 @@
   <!-- <script src="/assets/plugins/adminlte/js/pages/dashboard.js"></script> -->
 
   <script src="/assets/js/dashboard-logout.js"></script>
+  <script src="/assets/js/dashboard-delete-post.js"></script>
 </body>
 
 </html>

@@ -1,7 +1,8 @@
-$(".ajax-logout").click(function(e){
+$(".post-delete").click(function (e) {
     e.preventDefault();
-    fetch('/api/logout', {
-        method: 'POST',
+    var url = $(this).attr("href")
+    fetch(url, {
+        method: 'DELETE',
         mode: 'cors',
         cache: 'no-cache',
         credentials: 'same-origin',
@@ -11,4 +12,6 @@ $(".ajax-logout").click(function(e){
     }).then(data => {
         location.reload();
     });
-});
+})
+
+

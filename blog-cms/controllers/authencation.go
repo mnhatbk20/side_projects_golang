@@ -4,8 +4,6 @@ import (
 	"strconv"
 	"time"
 	"os"
-
-	"blog-cms/database"
 	"blog-cms/models"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
@@ -56,11 +54,8 @@ func Register(c *fiber.Ctx) error {
 		})
 	}
 
-	var count int64
 
-	database.DBGorm.Model(&models.User{}).Where("user_name = ?", data.UserName ).Count(&count)
-
-	if(count>0) {
+	if(models.UserNameExist(data.UserName)) {
 		return c.Status(fiber.StatusNotAcceptable).JSON(fiber.Map{
 			"message": "username has already been registered",
 			"validate_error": 0,
@@ -74,7 +69,7 @@ func Register(c *fiber.Ctx) error {
 		Password: string(password),
 	}
 
-	database.DBGorm.Create(&user)
+	user.CreateUser()
 
 	return c.JSON(fiber.Map{
 		"message": "success",
@@ -118,9 +113,7 @@ func Login(c *fiber.Ctx) error {
 	
 	var user models.User
 
-	database.DBGorm.First(&user, "user_name = ?", data.UserName)
-
-	if user.ID == 0 {
+	if (!models.UserNameExist(data.UserName)){
 		c.Status(fiber.StatusNotFound)
 		return c.Status(fiber.StatusNotAcceptable).JSON(fiber.Map{
 			"message": "user not found",

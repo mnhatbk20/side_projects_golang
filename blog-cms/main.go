@@ -10,8 +10,10 @@ import (
 )
 
 func main() {
+	
 	database.Connect()
-	engine := html.New("./views", ".html")
+
+	engine := html.New("./views/templates", ".html")
 	app := fiber.New(fiber.Config{
 		Views: engine,
 	})

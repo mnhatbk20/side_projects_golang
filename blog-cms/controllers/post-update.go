@@ -1,19 +1,25 @@
 package controllers
 
 import (
-	"blog-cms/database"
 	"blog-cms/models"
-	"strconv"
 	"strings"
-	"time"
-
+	"strconv"
 	"github.com/gofiber/fiber/v2"
 	// "github.com/go-playground/validator/v10"
 )
 
-func CreatePost(c *fiber.Ctx) error {
+func PostUpdateAPI(c *fiber.Ctx) error {
+
+	idPost := c.Params("id")
 
 	var post models.Post
+
+	result := post.GetPostById(idPost)
+	if result.RowsAffected == 0 {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+			"message": "Item not exist",
+		})
+	}
 
 	data := new(struct {
 		Title       string `form:"title" validate:"required"`
@@ -22,8 +28,7 @@ func CreatePost(c *fiber.Ctx) error {
 		Status      string `form:"status"`
 		CategoryID  uint   `form:"category-id"`
 		Description string `form:"description"`
-		Tags        string `form:"tags"`
-		CreatedAt   time.Time
+		Tags        string	`form:"tags"`
 	})
 
 	if err := c.BodyParser(data); err != nil {
@@ -36,15 +41,14 @@ func CreatePost(c *fiber.Ctx) error {
 	post.Status = data.Status
 	post.CategoryID = data.CategoryID
 	post.Description = data.Description
-	post.CreatedAt = time.Now()
-
+	 
 	IDTags := strings.Split(data.Tags, ",")
 
 	var tags []models.Tag
 
 	for _, id := range IDTags {
-		idnum, err := strconv.Atoi(id)
-		if err != nil {
+		idnum ,err := strconv.Atoi(id)
+		if err !=nil{
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"message": "Tag List is invalid",
 			})
@@ -52,8 +56,8 @@ func CreatePost(c *fiber.Ctx) error {
 		tags = append(tags, models.Tag{ID: uint(idnum)})
 	}
 
-	database.DBGorm.Create(&post)
-	database.DBGorm.Model(&post).Association("Tags").Replace(tags)
+	post.UpdatePost(tags) 
+
 
 	return c.JSON(fiber.Map{
 		"message": "success",

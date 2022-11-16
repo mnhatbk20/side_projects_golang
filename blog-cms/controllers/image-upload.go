@@ -1,16 +1,14 @@
 package controllers
 
 import (
-	"blog-cms/database"
 	"blog-cms/models"
 	"fmt"
 	"strings"
-
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 )
 
-func UploadImage(c *fiber.Ctx) error {
+func ImageUploadAPI(c *fiber.Ctx) error {
 
 	var token *jwt.Token
 	token = c.Locals("token").(*jwt.Token)
@@ -31,9 +29,9 @@ func UploadImage(c *fiber.Ctx) error {
 
 	var user models.User
 
-	database.DBGorm.Where("id = ?", claims.Issuer).First(&user)
+	user.GetUserById(claims.Issuer)	
 	user.Avatar = filename
-	database.DBGorm.Save(&user)
+	user.UpdateUser()	
 
 	return c.JSON(fiber.Map{
 		"message": "success",

@@ -14,15 +14,15 @@ func Setup(app *fiber.App) {
 	app.Get("/login", controllers.LoginPage)
 	app.Get("/register", controllers.RegisterPage)
 
-	app.Get("/dashboard", middleware.Authencation, controllers.DashboardPage)
-	app.Get("/dashboard/posts", middleware.Authencation, controllers.AllPostPage)
-	app.Get("/dashboard/posts/edit", middleware.Authencation, controllers.PostEditPage)
-	app.Get("/dashboard/posts/add", middleware.Authencation, controllers.PostAddPage)
+	app.Get("/dashboard", middleware.Authencation, controllers.Dashboard)
+	app.Get("/dashboard/posts", middleware.Authencation, controllers.AllPost)
+	app.Get("/dashboard/posts/edit", middleware.Authencation, controllers.EditPost)
+	app.Get("/dashboard/posts/add", middleware.Authencation, controllers.AddPost)
 
-
-	app.Post("/api/posts/update/:id", middleware.AuthencationAPI, controllers.UpdatePost)
-	app.Post("/api/posts/create", middleware.AuthencationAPI, controllers.CreatePost)
-	app.Post("/api/upload/image", middleware.AuthencationAPI, controllers.UploadImage)
+	app.Delete("/api/posts/delete/:id", middleware.AuthencationAPI, controllers.PostDeleteAPI)
+	app.Post("/api/posts/update/:id", middleware.AuthencationAPI, controllers.PostUpdateAPI)
+	app.Post("/api/posts/create", middleware.AuthencationAPI, controllers.PostCreateAPI)
+	app.Post("/api/upload/image", middleware.AuthencationAPI, controllers.ImageUploadAPI)
 	
 	app.Post("/api/register", controllers.Register)
 	app.Post("/api/login", controllers.Login)

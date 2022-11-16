@@ -1,4 +1,4 @@
-# Personal Blog CMS
+# Personal Blog CMS (MVC, Restful API)
 
 - Web Framework: Fiber
 - ORM Library: GORM

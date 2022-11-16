@@ -6,7 +6,5 @@ import (
 )
 
 func RegisterPage(c *fiber.Ctx) error {
-
 	return c.Render("register", nil)
-
 }
