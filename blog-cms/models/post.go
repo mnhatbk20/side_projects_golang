@@ -7,7 +7,6 @@ import (
 
 )
 
-
 type Post struct {
 	ID          uint  `gorm:"primarykey"`
 	Tags        []Tag `gorm:"many2many:post_tag;"`
@@ -33,8 +32,8 @@ func (post *Post) CreatePost(tags []Tag) (*gorm.DB, error){
 }
 
 func (post *Post) DeletePostById(id string) (*gorm.DB, error){	
-	tx := database.DBGorm.Where("id = ?", id).Delete(post)
 	err := database.DBGorm.Model(post).Association("Tags").Clear()
+	tx := database.DBGorm.Where("id = ?", id).Delete(post)
 	return tx, err
 }
 
