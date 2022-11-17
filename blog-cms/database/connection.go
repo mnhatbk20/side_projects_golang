@@ -3,8 +3,6 @@ package database
 import (
 	"log"
 	"os"
-
-	// "blog-cms/models"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -12,7 +10,7 @@ import (
 
 var DBGorm *gorm.DB
 
-func Connect() {
+func Connect() *gorm.DB{
 	err := godotenv.Load(".env")
 
 	if err != nil {
@@ -26,6 +24,9 @@ func Connect() {
 	if err != nil {
 		panic("could not connect to the database")
 	}
+
+	return DBGorm
+
 
 	// DBGorm.AutoMigrate(&models.BlogInfo{})
 	// DBGorm.AutoMigrate(&models.Post{})

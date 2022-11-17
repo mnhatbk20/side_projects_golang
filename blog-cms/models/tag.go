@@ -15,3 +15,7 @@ type Tag struct {
 func GetAllTags(tags *[]Tag) *gorm.DB{
 	return database.DBGorm.Find(&tags)
 }
+
+func (tag *Tag) Migrate(){
+	database.DBGorm.AutoMigrate(tag)
+}

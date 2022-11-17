@@ -6,7 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-
 type User struct {
 	ID        uint `gorm:"primarykey"`
 	FirstName string
@@ -19,8 +18,13 @@ type User struct {
 	CreatedAt time.Time
 }
 
+
 func (user *User) GetUserById(id string) *gorm.DB{
 	return database.DBGorm.First(&user, "id = ?", id)	
+}
+
+func (user *User) GetUserByUserName(username string) *gorm.DB{
+	return database.DBGorm.Where("user_name = ?", username).First(&user)
 }
 
 func (user *User) CreateUser() *gorm.DB{	
@@ -38,4 +42,6 @@ func UserNameExist(username string) bool{
 	return (count >0)
 }
 
-
+func (user *User) Migrate(){
+	database.DBGorm.AutoMigrate(user)
+}

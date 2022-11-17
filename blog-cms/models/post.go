@@ -41,6 +41,10 @@ func (post *Post) UpdatePost(tags []Tag) (*gorm.DB, error){
 	return database.DBGorm.Save(post) , database.DBGorm.Model(post).Association("Tags").Replace(tags)
 }
 
+func (post *Post) Migrate(){
+	database.DBGorm.AutoMigrate(post)
+}
+
 
 
 

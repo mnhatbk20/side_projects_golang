@@ -2,7 +2,7 @@ package models
 
 import (
 	"time"
-	// "blog-cms/database"
+	"blog-cms/database"
 )
 
 type Comment struct {
@@ -13,3 +13,6 @@ type Comment struct {
 	CreatedAt    time.Time
 }
 
+func (comment *Comment) Migrate(){
+	database.DBGorm.AutoMigrate(comment)
+}

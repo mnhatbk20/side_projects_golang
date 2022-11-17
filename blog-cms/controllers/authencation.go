@@ -1,14 +1,16 @@
 package controllers
 
 import (
+	"blog-cms/models"
+	"os"
 	"strconv"
 	"time"
-	"os"
-	"blog-cms/models"
+
 	"github.com/dgrijalva/jwt-go"
+	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
-	"github.com/go-playground/validator/v10"
+	// "blog-cms/database"
 
 )
 
@@ -112,6 +114,8 @@ func Login(c *fiber.Ctx) error {
 	}
 	
 	var user models.User
+
+	user.GetUserByUserName(data.UserName)
 
 	if (!models.UserNameExist(data.UserName)){
 		c.Status(fiber.StatusNotFound)

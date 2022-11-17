@@ -16,3 +16,8 @@ type Category struct {
 func GetAllCategories(categories *[]Category) *gorm.DB{
 	return database.DBGorm.Find(&categories)
 }
+
+func (category *Category) Migrate(){
+	database.DBGorm.AutoMigrate(category)
+}
+

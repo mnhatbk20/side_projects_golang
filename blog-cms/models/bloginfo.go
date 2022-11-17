@@ -2,6 +2,7 @@ package models
 
 import (
 	"time"
+	"blog-cms/database"
 )
 
 type BlogInfo struct {
@@ -14,3 +15,9 @@ type BlogInfo struct {
 	Logo       string
 	Favicon    string
 }
+
+
+func (bloginfo *BlogInfo) Migrate(){
+	database.DBGorm.AutoMigrate(bloginfo)
+}
+
